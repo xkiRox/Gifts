@@ -88,6 +88,18 @@
                 android:textColor="#FFFCF9"
                 />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Contraseña incorrecta."
+                android:id="@+id/txtViewError"
+                android:layout_weight="0.43"
+                android:textColor="#FFFCF9"
+                android:textAlignment="center"
+                android:layout_marginTop="10dp"
+                android:visibility="invisible" />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

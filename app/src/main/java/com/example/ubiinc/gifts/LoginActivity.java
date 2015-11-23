@@ -29,11 +29,12 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.ubiinc.gifts.response.User;
 import com.example.ubiinc.gifts.retrofill.RestClient;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -72,6 +73,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
+    private TextView txtError;
     private View mProgressView;
     private View mLoginFormView;
     private String TAG = LoginActivity.class.getSimpleName();
@@ -81,6 +83,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
+        txtError = (TextView) findViewById(R.id.txtViewError);
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
@@ -324,19 +327,32 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // TODO: attempt authentication against a network service.
             Map<String, String> param = new HashMap<String, String>();
 
+            String password = null;
+            try {
+                password = RestClient.SHA1(mPassword);
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
             param.put("email", mEmail);
-            param.put("password", mPassword);
+            param.put("password", password);
             param.put("name", "No Name");
 
             RestClient.get().login(param, new Callback<User>() {
                 @Override
                 public void success(User user, Response response) {
+                    txtError.setVisibility(View.INVISIBLE);
                     Log.e(TAG,user.get_id()+" "+user.getEmail()+" "+user.getName());
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
-
+                    if(error.getResponse().getStatus() == 404){
+                        txtError.setVisibility(View.VISIBLE);
+                        mPasswordView.setText("");
+                    }
                 }
             });
 
@@ -366,7 +382,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (success) {
 
-                finish();
+                //finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
