@@ -18,5 +18,7 @@
     <string name="action_sign_in_Facebook">iniciar sesion con Faccebook</string>
     <string name="action_sign_in_Correo">Ingresa con tu email</string>
     <string name="facebook_app_id">357133314447208</string>
+    <string name="title_activity_producto">ProductoActivity</string>
+
 
 </resources>
