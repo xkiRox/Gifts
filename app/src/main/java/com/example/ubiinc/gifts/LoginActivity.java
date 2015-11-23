@@ -19,6 +19,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,8 +29,10 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -49,7 +52,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * TODO: remove after connecting to a real authentication system.
      */
     private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
+            "foo@example.com:hello", "bar@example.com:world",
+            "hector@correo.com:12345", "angela@correo.com:12345",
+            "vanesa@correo.com:12345", "jeferson@correo.com:12345",
     };
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -145,7 +150,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private void attemptLogin() {
         if (mAuthTask != null) {
-            return;
+
         }
 
         // Reset errors.
@@ -186,7 +191,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // perform the user login attempt.
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+            Toast.makeText(LoginActivity.this, "Login: "+email, Toast.LENGTH_SHORT).show();
+            //mAuthTask.execute((Void) null);
         }
     }
 
