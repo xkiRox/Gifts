@@ -16,9 +16,11 @@
     <!-- Login progress -->
 
     <ImageView
-        android:layout_width="99dp"
-        android:layout_height="80dp"
-        android:background="@drawable/regalo"/>
+        android:layout_width="129dp"
+        android:layout_height="104dp"
+        android:background="@drawable/regalo"
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="50dp"/>
     <ProgressBar
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyleLarge"
@@ -82,7 +84,8 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/action_sign_in"
                 android:textStyle="bold"
-
+                android:background="#F38925"
+                android:textColor="#FFFCF9"
                 />
 
         </LinearLayout>

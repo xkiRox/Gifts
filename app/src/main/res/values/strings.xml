@@ -17,6 +17,6 @@
     <string name="title_activity_login_facebook">Gift</string>
     <string name="action_sign_in_Facebook">iniciar sesion con Faccebook</string>
     <string name="action_sign_in_Correo">Ingresa con tu email</string>
-
+    <string name="facebook_app_id">357133314447208</string>
 
 </resources>

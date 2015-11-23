@@ -31,9 +31,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ubiinc.gifts.response.User;
+import com.example.ubiinc.gifts.retrofill.RestClient;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -66,6 +74,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private String TAG = LoginActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,8 +200,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // perform the user login attempt.
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
-            Toast.makeText(LoginActivity.this, "Login: "+email, Toast.LENGTH_SHORT).show();
-            //mAuthTask.execute((Void) null);
+            //Toast.makeText(LoginActivity.this, "Login: "+email, Toast.LENGTH_SHORT).show();
+            mAuthTask.execute((Void) null);
         }
     }
 
@@ -313,6 +322,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
+            Map<String, String> param = new HashMap<String, String>();
+
+            param.put("email", mEmail);
+            param.put("password", mPassword);
+            param.put("name", "No Name");
+
+            RestClient.get().login(param, new Callback<User>() {
+                @Override
+                public void success(User user, Response response) {
+                    Log.e(TAG,user.get_id()+" "+user.getEmail()+" "+user.getName());
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+
+                }
+            });
 
             try {
                 // Simulate network access.
@@ -339,6 +365,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
+
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
