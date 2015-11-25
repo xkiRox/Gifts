@@ -3,6 +3,8 @@ package com.example.ubiinc.gifts;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -70,6 +72,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private UserLoginTask mAuthTask = null;
 
+    private Activity activity;
+
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
@@ -82,6 +86,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        activity = this;
+
         // Set up the login form.
         txtError = (TextView) findViewById(R.id.txtViewError);
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -345,6 +351,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 public void success(User user, Response response) {
                     txtError.setVisibility(View.INVISIBLE);
                     Log.e(TAG,user.get_id()+" "+user.getEmail()+" "+user.getName());
+                    startActivity(new Intent(activity, ProductoActivity.class));
+                    finish();
                 }
 
                 @Override
@@ -381,7 +389,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-
+                //startActivity(new Intent(activity, ProductoActivity.class));
                 //finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

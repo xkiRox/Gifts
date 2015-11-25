@@ -41,7 +41,7 @@ public class RestClient {
 
     private static void setupRestClient() {
 
-        String url_base = "http://192.168.1.104:8080/";
+        String url_base = "http://192.168.0.14:8080/";
 
         OkClient client = getOkClient();
 

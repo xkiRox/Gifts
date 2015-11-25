@@ -52,6 +52,7 @@
             android:value="@string/facebook_app_id" />
 
         <activity android:name=".ProductoActivity" >
+
         </activity>
     </application>
 

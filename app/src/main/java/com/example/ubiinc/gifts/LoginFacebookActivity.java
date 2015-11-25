@@ -45,6 +45,7 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphRequestAsyncTask;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
@@ -289,7 +290,7 @@ public class LoginFacebookActivity extends AppCompatActivity implements LoaderCa
                     public void onCompleted(GraphResponse graphResponse) {
                         Map<String, String> params = null;
                         try {
-                            Log.e(TAG,graphResponse.getJSONObject().toString());
+                            //Log.e(TAG,graphResponse.getJSONObject().toString());
 
                             if (graphResponse.getJSONObject().getString("email") != null) {
                                 String email = graphResponse.getJSONObject().getString("email");
@@ -305,7 +306,10 @@ public class LoginFacebookActivity extends AppCompatActivity implements LoaderCa
                                 RestClient.get().login(params, new Callback<User>() {
                                     @Override
                                     public void success(User user, Response response) {
-                                        Log.e(TAG,user.get_id()+" "+user.getEmail()+" "+user.getName());
+                                        Log.e(TAG, user.get_id() + " " + user.getEmail() + " " + user.getName());
+                                        startActivity(new Intent(activity, ProductoActivity.class));
+                                        LoginManager.getInstance().logOut();
+                                        finish();
                                     }
 
                                     @Override
